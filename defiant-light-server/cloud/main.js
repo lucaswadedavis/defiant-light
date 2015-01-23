@@ -1,5 +1,7 @@
+var API = require('cloud/APIKeys.js');
+
 var Mandrill = require('mandrill');
-Mandrill.initialize('YJsdSiJ-lK2LfRNvDRPGVA');
+Mandrill.initialize(API.mandrill);
 
 var fauxPoe = require('cloud/faux-poe.js');
 
@@ -30,12 +32,10 @@ Parse.Cloud.define('prepareProduct', function(request, response){
       //Temporary DB for storing 
       var Temp = Parse.Object.extend("Temp");
       var temp = new Temp();
-      temp.set("email", results[email]);
-      temp.set("quantity", results[quantity]);
+      temp.set("email", results.email);
+      temp.set("quantity", results.quantity);
       temp.set('poem',fauxPoe());
       temp.save();
-      
-      
       
       
       response.success(results);
